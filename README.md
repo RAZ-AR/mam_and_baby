@@ -2,9 +2,18 @@
 
 A multilingual marketplace application for buying and selling children's items in Belgrade. Built with React, Node.js, PostgreSQL, and TypeScript.
 
+## 🚀 Quick Deploy
+
+**Ready to deploy?** Check out our deployment guides:
+
+- 📘 **[Quick Deploy Guide](QUICK_DEPLOY.md)** - Deploy in 10 minutes with Railway + Vercel (FREE)
+- 📗 **[Full Hosting Guide](HOSTING.md)** - Detailed instructions for Railway, Render, Vercel, and Docker
+
+**GitHub Repository**: https://github.com/RAZ-AR/mam_and_baby
+
 ## Features
 
-✅ **User Authentication** - Register, login, JWT-based authentication
+✅ **User Authentication** - Register, login, JWT-based authentication + OAuth (Google, Facebook)
 ✅ **Product Listings** - Create, browse, and search listings with photos
 ✅ **ISO Requests** - "In Search Of" requests with expiration tracking
 ✅ **Advanced Search** - Filter by price, location, age, size, and keywords
@@ -12,6 +21,7 @@ A multilingual marketplace application for buying and selling children's items i
 ✅ **User Profiles** - View and manage your listings and ISO requests
 ✅ **Orders & Payments** - Complete order management with payment tracking and card number storage
 ✅ **Multilingual** - Full support for Serbian (Latin), Russian, and English
+✅ **Modern UI** - Beautiful gradient design with smooth animations
 ✅ **Responsive Design** - Mobile-friendly interface
 
 ## Tech Stack
