@@ -1,0 +1,25 @@
+{
+  "name": "belgrade-mama-marketplace",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev:web": "pnpm --filter @app/web dev",
+    "dev:api": "pnpm --filter @app/api dev",
+    "build": "pnpm -r build",
+    "build:api": "pnpm --filter @app/api build",
+    "build:web": "pnpm --filter @app/web build",
+    "start:api": "pnpm --filter @app/api start",
+    "preview:web": "pnpm --filter @app/web preview",
+    "lint": "pnpm -r lint",
+    "format": "pnpm -r format",
+    "prisma:generate": "pnpm --filter @app/api exec prisma generate",
+    "prisma:migrate": "pnpm --filter @app/api exec prisma migrate deploy",
+    "prisma:studio": "pnpm --filter @app/api exec prisma studio",
+    "clean": "pnpm -r clean && rm -rf node_modules",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.5"
+  }
+}

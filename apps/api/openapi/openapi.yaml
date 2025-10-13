@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info:
+  title: Belgrade Mama API (MVP)
+  version: 0.1.0
+paths:
+  /:
+    get:
+      summary: Healthcheck
+      responses: { "200": { "description": "ok" } }
+  /listings:
+    get:
+      summary: List listings
+      responses: { "200": { "description": "ok" } }
+    post:
+      summary: Create listing
+      requestBody: { required: true }
+      responses: { "201": { "description": "created" } }
+  /iso:
+    post:
+      summary: Create ISO request
+      requestBody: { required: true }
+      responses: { "201": { "description": "created" } }
+  /iso/feed:
+    get:
+      summary: ISO feed
+      responses: { "200": { "description": "ok" } }

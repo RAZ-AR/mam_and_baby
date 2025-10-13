@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String?  // hashed, optional for OAuth users
+  name      String
+  phone     String?
+
+  // OAuth fields
+  provider       String?  // google, facebook, telegram, local
+  providerId     String?  // OAuth provider user ID
+  avatar         String?  // Profile picture URL from OAuth
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  listings     Listing[]
+  isos         ISO[]
+  buyerOrders  Order[]   @relation("BuyerOrders")
+  sellerOrders Order[]   @relation("SellerOrders")
+
+  @@unique([provider, providerId])
+  @@map("users")
+}
+
+model Listing {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  price       Float
+  age         String?   // "0-6 месяцев", "1-2 года", etc
+  size        String?   // "62-68", "74-80", etc
+  district    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  photos      Photo[]
+  orders      Order[]
+
+  @@map("listings")
+}
+
+model ISO {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  budget      Float?
+  age         String?
+  size        String?
+  district    String?
+  daysValid   Int      @default(7)
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("isos")
+}
+
+model Photo {
+  id        String   @id @default(uuid())
+  url       String
+  createdAt DateTime @default(now())
+
+  listingId String
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@map("photos")
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  totalAmount Float
+  status      OrderStatus @default(PENDING)
+
+  // Buyer info
+  buyerName   String
+  buyerPhone  String
+  buyerEmail  String?
+
+  // Delivery info
+  deliveryAddress String?
+  deliveryDistrict String?
+  notes       String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  completedAt DateTime?
+
+  // Relations
+  buyerId     String
+  buyer       User     @relation("BuyerOrders", fields: [buyerId], references: [id], onDelete: Cascade)
+
+  listingId   String
+  listing     Listing  @relation(fields: [listingId], references: [id], onDelete: Restrict)
+
+  sellerId    String
+  seller      User     @relation("SellerOrders", fields: [sellerId], references: [id], onDelete: Cascade)
+
+  payment     Payment?
+
+  @@map("orders")
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  amount        Float
+  method        PaymentMethod @default(CARD)
+  status        PaymentStatus @default(PENDING)
+
+  // Card info (последние 4 цифры для безопасности)
+  cardLastFour  String?
+  cardNumber    String?       // Полный номер карты (временно для демо, в продакшене использовать payment gateway)
+
+  transactionId String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  paidAt        DateTime?
+
+  orderId       String   @unique
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  IN_DELIVERY
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CARD
+  CASH
+  BANK_TRANSFER
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
