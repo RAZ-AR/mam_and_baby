@@ -3,7 +3,26 @@
 ## 📦 GitHub Repository
 **Main Repository**: https://github.com/RAZ-AR/mam_and_baby
 
-## 🚀 Deploy Your App (FREE Hosting)
+## 🆓 100% Бесплатный Хостинг (БЕЗ КАРТЫ!)
+
+### Вариант 1: Vercel + Supabase (Рекомендую!)
+- **Frontend**: https://vercel.com (100GB bandwidth бесплатно)
+- **Backend**: https://vercel.com (serverless functions)
+- **Database**: https://supabase.com (500MB PostgreSQL бесплатно)
+
+### Вариант 2: Render + Neon
+- **Frontend + Backend**: https://render.com (750 часов/месяц бесплатно)
+- **Database**: https://neon.tech (10GB PostgreSQL бесплатно)
+
+### Вариант 3: Netlify + PlanetScale
+- **Frontend**: https://netlify.com (100GB bandwidth бесплатно)
+- **Database**: https://planetscale.com (5GB MySQL бесплатно)
+
+📖 **Подробные инструкции**: [FREE_HOSTING.md](FREE_HOSTING.md)
+
+---
+
+## 🚀 Deploy Your App (Другие опции)
 
 ### Step 1: Backend on Railway
 1. **Railway Dashboard**: https://railway.app
