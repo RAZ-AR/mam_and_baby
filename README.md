@@ -4,19 +4,23 @@ A multilingual marketplace application for buying and selling children's items i
 
 ## 🚀 Quick Deploy (100% FREE!)
 
-**Ready to deploy?** Check out our deployment guides:
+### 👉 **[START HERE - Начните с этого файла!](START_HERE.md)** 👈
 
-- 🆓 **[FREE Hosting Guide](FREE_HOSTING.md)** - 100% бесплатный хостинг (без карты!)
-- 📘 **[Quick Deploy Guide](QUICK_DEPLOY.md)** - Deploy in 10 minutes
-- 📗 **[Full Hosting Guide](HOSTING.md)** - Detailed instructions for all platforms
+**Ready to deploy in 15 minutes?**
+
+**Рекомендуемый вариант: Render + Neon**
+- 📖 **[Подробная инструкция](RENDER_NEON_DEPLOY.md)** - Пошаговый гайд
+- ⏱️ 15 минут
+- 💰 Бесплатно навсегда
+- 💳 Кредитная карта НЕ нужна
+- 💾 10GB база данных
+
+**Другие варианты:**
+- 🆓 **[FREE Hosting Guide](FREE_HOSTING.md)** - Все бесплатные варианты (Vercel, Supabase, Netlify)
+- 📘 **[Quick Deploy Guide](QUICK_DEPLOY.md)** - Railway + Vercel
+- 🔗 **[LINKS.md](LINKS.md)** - Все ссылки в одном месте
 
 **GitHub Repository**: https://github.com/RAZ-AR/mam_and_baby
-
-### Рекомендуемые бесплатные сервисы:
-- **Frontend**: Vercel (100GB bandwidth/month)
-- **Backend**: Vercel Serverless или Render
-- **Database**: Supabase (500MB) или Neon (10GB)
-- **Все без кредитной карты!** 💳❌
 
 ## Features
 

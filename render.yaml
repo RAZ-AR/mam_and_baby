@@ -3,8 +3,11 @@ services:
   - type: web
     name: belgrade-mama-api
     env: node
-    buildCommand: cd apps/api && pnpm install && pnpm prisma generate
-    startCommand: cd apps/api && pnpm start
+    region: frankfurt
+    plan: free
+    rootDir: apps/api
+    buildCommand: pnpm install && pnpm prisma generate
+    startCommand: pnpm prisma migrate deploy && pnpm start
     envVars:
       - key: DATABASE_URL
         sync: false
@@ -14,8 +17,10 @@ services:
         value: 4000
       - key: NODE_ENV
         value: production
+      - key: BACKEND_URL
+        value: https://belgrade-mama-api.onrender.com
       - key: FRONTEND_URL
-        value: https://belgrade-mama.vercel.app
+        value: https://belgrade-mama-web.onrender.com
       - key: GOOGLE_CLIENT_ID
         sync: false
       - key: GOOGLE_CLIENT_SECRET
@@ -25,12 +30,15 @@ services:
       - key: FACEBOOK_APP_SECRET
         sync: false
 
-  # PostgreSQL Database
-  - type: pserv
-    name: belgrade-mama-db
-    env: docker
-    plan: starter
-    disk:
-      name: postgres-data
-      mountPath: /var/lib/postgresql/data
-      sizeGB: 1
+  # Frontend Static Site
+  - type: web
+    name: belgrade-mama-web
+    env: static
+    region: frankfurt
+    plan: free
+    rootDir: apps/web
+    buildCommand: pnpm install && pnpm build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://belgrade-mama-api.onrender.com
