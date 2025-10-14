@@ -23,8 +23,6 @@ services:
   - type: web
     name: belgrade-mama-web
     env: static
-    region: frankfurt
-    plan: free
     buildCommand: cd apps/web && npm install && npm run build
     staticPublishPath: apps/web/dist
     envVars:
