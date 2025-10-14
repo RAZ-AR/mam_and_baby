@@ -9,25 +9,15 @@ services:
     startCommand: cd apps/api && npx prisma migrate deploy && npm run start
     envVars:
       - key: DATABASE_URL
-        sync: false
+        value: postgresql://neondb_owner:npg_bKCHnzQ75xrI@ep-damp-surf-agvnau3d-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require
       - key: JWT_SECRET
-        generateValue: true
+        value: SX24LyfnbnhB036bgthpv2fwzAfjcSzjHOhBCUx07D4=
       - key: PORT
-        value: 4000
+        value: 10000
       - key: NODE_ENV
         value: production
-      - key: BACKEND_URL
-        value: https://belgrade-mama-api.onrender.com
-      - key: FRONTEND_URL
+      - key: CORS_ORIGIN
         value: https://belgrade-mama-web.onrender.com
-      - key: GOOGLE_CLIENT_ID
-        sync: false
-      - key: GOOGLE_CLIENT_SECRET
-        sync: false
-      - key: FACEBOOK_APP_ID
-        sync: false
-      - key: FACEBOOK_APP_SECRET
-        sync: false
 
   # Frontend Static Site
   - type: web
