@@ -5,9 +5,8 @@ services:
     env: node
     region: frankfurt
     plan: free
-    rootDir: apps/api
-    buildCommand: pnpm install && pnpm prisma generate
-    startCommand: pnpm prisma migrate deploy && pnpm start
+    buildCommand: cd apps/api && npm install && npx prisma generate
+    startCommand: cd apps/api && npx prisma migrate deploy && npm run start
     envVars:
       - key: DATABASE_URL
         sync: false
@@ -36,9 +35,8 @@ services:
     env: static
     region: frankfurt
     plan: free
-    rootDir: apps/web
-    buildCommand: pnpm install && pnpm build
-    staticPublishPath: dist
+    buildCommand: cd apps/web && npm install && npm run build
+    staticPublishPath: apps/web/dist
     envVars:
       - key: VITE_API_URL
         value: https://belgrade-mama-api.onrender.com
