@@ -50,7 +50,8 @@ A multilingual marketplace application for buying and selling children's items i
 - Node.js + Express + TypeScript
 - PostgreSQL + Prisma ORM
 - JWT Authentication
-- Multer (file uploads)
+- Cloudinary (image storage & CDN)
+- Multer + multer-storage-cloudinary (file uploads)
 - Zod (validation)
 
 ## Prerequisites
@@ -189,8 +190,11 @@ NODE_ENV=development
 CORS_ORIGIN=http://localhost:5173
 DATABASE_URL="postgresql://user:password@localhost:5432/marketplace"
 JWT_SECRET="your-secret-key-here"
-MAX_FILE_SIZE=5242880
-MAX_FILES=5
+
+# Cloudinary (for image uploads)
+CLOUDINARY_CLOUD_NAME="your-cloud-name"
+CLOUDINARY_API_KEY="your-api-key"
+CLOUDINARY_API_SECRET="your-api-secret"
 ```
 
 ### Frontend (`apps/web/.env`)
@@ -231,28 +235,37 @@ VITE_ENV=development
 
 ## Deployment
 
-### Backend
-- Recommended: Railway, Render, Fly.io
-- Requires: PostgreSQL database, Node.js runtime
-- Don't forget to set production environment variables!
+### 🚀 Recommended Stack (100% FREE!)
+- **Backend**: Render Free Tier
+- **Frontend**: Render Static Site
+- **Database**: Neon PostgreSQL (10GB free)
+- **Image Storage**: Cloudinary (25GB free)
 
-### Frontend
-- Recommended: Vercel, Netlify
-- Build command: `pnpm build`
-- Output directory: `apps/web/dist`
+📖 **[Complete Deployment Guide](RENDER_NEON_DEPLOY.md)** - Step-by-step instructions
+
+### Backend (Render)
+- Requires: PostgreSQL database, Node.js runtime, Cloudinary account
+- Build Command: `cd apps/api && npm install --legacy-peer-deps && npx prisma generate`
+- Start Command: `cd apps/api && npx prisma db push --accept-data-loss && npx tsx src/index.ts`
+
+### Frontend (Render Static Site)
+- Build Command: `cd apps/web && pnpm vite build`
+- Publish Directory: `apps/web/dist`
 
 ## Security Considerations
 
 ⚠️ **Before deploying to production:**
 
 1. Generate a strong JWT secret: `openssl rand -base64 32`
-2. Use secure PostgreSQL credentials
-3. Enable HTTPS
-4. Set `NODE_ENV=production`
-5. Review CORS settings
-6. Consider using cloud storage (S3, Cloudinary) for uploads
-7. Add rate limiting
+2. Use secure PostgreSQL credentials (use Neon for free)
+3. Setup Cloudinary account for image storage
+4. Enable HTTPS (automatic on Render)
+5. Set `NODE_ENV=production`
+6. Review CORS settings
+7. Configure rate limiting
 8. Enable security headers
+9. **Important**: Render Free Tier has cold starts after 15 min inactivity
+   - Use UptimeRobot (free) to keep your backend awake
 
 ## Contributing
 
