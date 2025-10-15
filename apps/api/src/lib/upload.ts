@@ -1,18 +1,28 @@
 import multer from 'multer';
-import path from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import { Request } from 'express';
 
-// Storage configuration
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => {
-    // Store uploads in 'uploads' folder (create it if it doesn't exist)
-    cb(null, 'uploads/');
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Cloudinary storage configuration
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: async (_req, file) => {
+    return {
+      folder: 'belgrade-mama', // Folder name in Cloudinary
+      allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+      transformation: [
+        { width: 1200, height: 1200, crop: 'limit' }, // Max dimensions
+        { quality: 'auto:good' }, // Auto quality optimization
+      ],
+    };
   },
-  filename: (_req, file, cb) => {
-    // Generate unique filename: timestamp-randomstring.ext
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
 });
 
 // File filter - only images
@@ -26,7 +36,7 @@ const fileFilter = (_req: Request, file: Express.Multer.File, cb: multer.FileFil
   }
 };
 
-// Multer instance
+// Multer instance with Cloudinary storage
 export const upload = multer({
   storage,
   fileFilter,
@@ -34,3 +44,6 @@ export const upload = multer({
     fileSize: 5 * 1024 * 1024, // 5MB max file size
   },
 });
+
+// Export cloudinary instance for direct usage if needed
+export { cloudinary };

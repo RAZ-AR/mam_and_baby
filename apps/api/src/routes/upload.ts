@@ -12,9 +12,8 @@ router.post('/', authenticate, upload.single('image'), async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    // Generate URL for the uploaded file
-    const baseUrl = process.env.BASE_URL || `http://localhost:${process.env.PORT || 4000}`;
-    const fileUrl = `${baseUrl}/uploads/${req.file.filename}`;
+    // Cloudinary URL is available in req.file.path
+    const fileUrl = req.file.path;
 
     res.status(201).json({
       url: fileUrl,
@@ -49,10 +48,10 @@ router.post('/listing/:listingId', authenticate, upload.array('photos', 5), asyn
       return res.status(403).json({ error: 'Not authorized to upload photos for this listing' });
     }
 
-    // Create photo records
-    const baseUrl = process.env.BASE_URL || `http://localhost:${process.env.PORT || 4000}`;
+    // Create photo records with Cloudinary URLs
     const photoPromises = req.files.map((file) => {
-      const fileUrl = `${baseUrl}/uploads/${file.filename}`;
+      // Cloudinary URL is available in file.path
+      const fileUrl = file.path;
       return prisma.photo.create({
         data: {
           url: fileUrl,
